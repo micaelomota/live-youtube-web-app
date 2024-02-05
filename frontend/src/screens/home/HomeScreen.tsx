@@ -34,8 +34,7 @@ export const HomeScreen: React.FC = () => {
   };
 
   return (
-    <Space direction="vertical">
-      {/* TODO: alinhar a direita  */}
+    <Space align="end" direction="vertical">
       <Button onClick={onClickNewTarget} icon={<PlusOutlined />} type="primary">
         Nova Meta
       </Button>
