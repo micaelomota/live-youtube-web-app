@@ -63,8 +63,6 @@ type Target = {
   name: string;
   currentValue: number;
   unit: string;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
