@@ -9,7 +9,7 @@ import {
   Space,
   theme,
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { AimOutlined, HomeOutlined } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
@@ -18,8 +18,31 @@ const { Header, Content, Footer } = Layout;
 //   key: index + 1,
 //   label: `nav ${index + 1}`,
 // }));
-
 const items: any = [];
+type BreadcrumbitemsType = {
+  href: string;
+  title: React.ReactNode;
+};
+const Breadcrumbitems: BreadcrumbitemsType[] = [
+  {
+    href: "/",
+    title: (
+      <>
+        <HomeOutlined />
+        <span>Home</span>
+      </>
+    ),
+  },
+  {
+    href: "/new-target",
+    title: (
+      <>
+        <AimOutlined />
+        <span>Metas</span>
+      </>
+    ),
+  },
+];
 
 export const AppLayout: React.FC = () => {
   const {
@@ -39,11 +62,7 @@ export const AppLayout: React.FC = () => {
         />
       </Header>
       <Content style={{ padding: "0 48px" }}>
-        {/* TODO: fazer breadcrumb dinamico */}
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>Metas</Breadcrumb.Item>
-        </Breadcrumb>
+        <Breadcrumb style={{ margin: "16px 0" }} items={Breadcrumbitems} />
 
         <div
           style={{
