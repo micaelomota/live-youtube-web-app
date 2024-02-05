@@ -61,8 +61,6 @@ type Target = {
   name: string;
   currentValue: number;
   unit: string;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
@@ -71,7 +69,12 @@ export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
   const [targets, setTargets] = useState<Target[]>(mockData);
 
   const addTarget = (target: Target) => {
-    setTargets((t) => [...t, target]);
+    setTargets((t) => [...t, { 
+      ...target,
+      // TODO: deve ser movido para o backend
+       createdAt: new Date().toISOString(),
+       updatedAt: new Date().toISOString()
+      }]);
   };
 
   const contextValue = useMemo(
