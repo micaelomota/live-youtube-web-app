@@ -1,88 +1,71 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 
 type TargetContextValue = {
-  targets: any[];
-  addTarget: (target: any) => void;
+  targets: TargetProps[] | undefined;
+  addTarget: (target: Omit<TargetProps, "id">) => void;
+  getTargetById: (id: number) => TargetProps | undefined;
 };
 
 const TargetContext = createContext<TargetContextValue | null>(null);
 
-const mockData = [
-  {
-    name: "Ler 1 livro por mês",
-    currentValue: 2,
-    target: 12,
-    unit: "Unidade",
-    createdAt: "2021-01-01T00:00:00Z",
-    updatedAt: "2021-01-01T00:00:00Z",
-    entries: [
-      {
-        value: 2,
-        date: "2021-01-01",
-        notes: "Zero - A biografia de uma ideia perigosa",
-      },
-      {
-        value: 2,
-        date: "2021-02-01",
-        notes: "Algorithms to live by ",
-      },
-    ],
-  },
-  {
-    name: "Ir para a academia 3x por semana",
-    currentValue: 12,
-    target: 156,
-    unit: "Unidade",
-    createdAt: "2021-01-01",
-    updatedAt: "2021-01-01",
-    entries: [
-      {
-        value: 2,
-        date: "2024-01-01",
-        notes: "Peito e Biceps",
-      },
-      {
-        value: 2,
-        date: "2024-01-03",
-        notes: "Costas e Triceps",
-      },
-      {
-        value: 2,
-        date: "2024-01-05",
-        notes: "Pernas",
-      },
-      // ...
-    ],
-  },
-];
+interface Entry {
+  value: number;
+  date: string;
+  notes?: string;
+}
 
-type Target = {
-  // id: number
+export interface TargetProps {
+  id: number;
   name: string;
+  target: number;
   currentValue: number;
   unit: string;
-};
+  entries?: Entry[];
+}
+
+const defaultTargets: TargetProps[] = [
+  {
+    id: Date.now(),
+    name: "Correr 100 km",
+    target: 100,
+    currentValue: 50,
+    unit: "Km (Quilômetro)",
+    entries: [
+      {
+        value: 5,
+        date: "2022-01-01",
+        notes: "Corrir na praia da barra"
+      },
+      {
+        value: 2,
+        date: "2022-01-02",
+        notes: "Corrir na esteira da academia"
+      }
+    ]
+  }
+]
 
 export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [targets, setTargets] = useState<Target[]>(mockData);
+  const [targets, setTargets] = useState<TargetProps[]>(defaultTargets);
 
-  const addTarget = (target: Target) => {
-    setTargets((t) => [...t, { 
-      ...target,
-      // TODO: deve ser movido para o backend
-       createdAt: new Date().toISOString(),
-       updatedAt: new Date().toISOString()
-      }]);
-  };
+  const addTarget = useCallback((target: Omit<TargetProps, "id">) => {
+    setTargets((prev) => [...(prev || []), { ...target, id: Date.now() }]);
+  }, []);
+
+  const getTargetById = useCallback(
+    (id: number) => {
+      return targets?.find((target) => target.id === id)
+    }, [targets])
 
   const contextValue = useMemo(
     () => ({
       targets,
       addTarget,
+      getTargetById
     }),
-    [targets]
+    [addTarget, targets, getTargetById]
   );
 
   return (
