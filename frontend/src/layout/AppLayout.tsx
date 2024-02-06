@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Breadcrumb,
-  Button,
-  Layout,
-  List,
-  Menu,
-  Progress,
-  Space,
-  theme,
-} from "antd";
+import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { AimOutlined, HomeOutlined } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
 
