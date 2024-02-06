@@ -1,23 +1,10 @@
 import React from "react";
 import {
-  Breadcrumb,
-  Button,
-  Layout,
-  List,
-  Menu,
-  Progress,
-  Space,
-  theme,
+  Breadcrumb, Layout, Menu, theme
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
-
-// const items = new Array(15).fill(null).map((_, index) => ({
-//   key: index + 1,
-//   label: `nav ${index + 1}`,
-// }));
 
 const items: any = [];
 
@@ -38,7 +25,7 @@ export const AppLayout: React.FC = () => {
           style={{ flex: 1, minWidth: 0 }}
         />
       </Header>
-      <Content style={{ padding: "0 48px" }}>
+      <Content style={{ padding: "0 10px" }}>
         {/* TODO: fazer breadcrumb dinamico */}
         <Breadcrumb style={{ margin: "16px 0" }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
