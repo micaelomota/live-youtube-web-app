@@ -3,26 +3,21 @@ import { useNavigate } from "react-router-dom";
 import InputForm from "../../components/InputForm";
 import SelectForm from "../../components/SelectForm";
 import ButtonForm from "../../components/ButtonForm";
-import { useTargets } from "../../context/TargetContext";
-
-interface Target {
-  name: string;
-  unit: string;
-  currentValue: number;
-  createdAt: string;
-  updatedAt: string;
-}
+import { TargetProps, useTargets } from "../../context/TargetContext";
 
 export const NewTargetScreen: React.FC = () => {
-  const [form] = Form.useForm<Target>();
+  const [form] = Form.useForm<TargetProps>();
   const navigate = useNavigate();
   const { addTarget } = useTargets();
 
-  const onFinishForm = (values: Target) => {
+  const onFinishForm = (values: TargetProps) => {
     addTarget({
-      ...values,
-      currentValue: Number(values.currentValue),
+      name: values.name,
+      unit: values.unit,
+      currentValue: values.currentValue,
+      target: values.target,
     });
+    
     navigate("/");
   };
 
