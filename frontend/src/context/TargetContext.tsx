@@ -13,6 +13,7 @@ type TargetContextValue = {
   targets: TargetProps[] | undefined;
   addTarget: (target: Omit<TargetProps, "id">) => void;
   getTargetById: (id: number) => TargetProps | undefined;
+  incrementEntry: (id: number, entry: Entry) => void;
 };
 
 const TargetContext = createContext<TargetContextValue | null>(null);
@@ -28,36 +29,18 @@ export interface TargetProps {
   name: string;
   target: number;
   currentValue: number;
-  unit: string;
+  unity: string;
   entries?: Entry[];
 }
-
-const defaultTargets: TargetProps[] = [
-  {
-    id: Date.now(),
-    name: "Correr 100 km",
-    target: 100,
-    currentValue: 50,
-    unit: "Km (Quilômetro)",
-    entries: [
-      {
-        value: 5,
-        date: "2022-01-01",
-        notes: "Corrir na praia da barra",
-      },
-      {
-        value: 2,
-        date: "2022-01-02",
-        notes: "Corrir na esteira da academia",
-      },
-    ],
-  },
-];
 
 export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [targets, setTargets] = useState<TargetProps[]>(defaultTargets);
+  const [targets, setTargets] = useState<TargetProps[]>(
+    localStorage.getItem("targets")
+      ? JSON.parse(localStorage.getItem("targets")!)
+      : []
+  );
 
   const userId = "ZR9MbNxPj6CfaoHgnXoq";
 
@@ -73,13 +56,29 @@ export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
     [targets]
   );
 
+  const incrementEntry = useCallback((id: number, entry: Entry) => {
+    setTargets((prev) =>
+      prev?.map((target) => {
+        if (target.id === id) {
+          return {
+            ...target,
+            currentValue: target.currentValue + entry.value,
+            entries: [...(target.entries || []), entry],
+          };
+        }
+        return target;
+      })
+    );
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       targets,
       addTarget,
       getTargetById,
+      incrementEntry,
     }),
-    [addTarget, targets, getTargetById]
+    [addTarget, targets, getTargetById, incrementEntry]
   );
 
   useEffect(() => {
