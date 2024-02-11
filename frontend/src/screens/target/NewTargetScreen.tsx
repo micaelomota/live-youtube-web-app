@@ -4,6 +4,7 @@ import InputForm from "../../components/InputForm";
 import SelectForm from "../../components/SelectForm";
 import ButtonForm from "../../components/ButtonForm";
 import { TargetProps, useTargets } from "../../context/TargetContext";
+import InputFormNumber from "../../components/InputFormNumber";
 
 export const NewTargetScreen: React.FC = () => {
   const [form] = Form.useForm<TargetProps>();
@@ -13,11 +14,11 @@ export const NewTargetScreen: React.FC = () => {
   const onFinishForm = (values: TargetProps) => {
     addTarget({
       name: values.name,
-      unit: values.unit,
+      unity: values.unity,
       currentValue: values.currentValue,
       target: values.target,
     });
-    
+
     navigate("/");
   };
 
@@ -30,11 +31,10 @@ export const NewTargetScreen: React.FC = () => {
           placeholder="Nome da meta"
           rules={[{ required: true, message: "Campo obrigatório." }]}
         />
-        <InputForm
+        <InputFormNumber
           label="Quantidade"
           name="target"
           placeholder="Quantidade"
-          type="number"
           rules={[{ required: true, message: "Campo obrigatório." }]}
         />
         <SelectForm
@@ -57,11 +57,10 @@ export const NewTargetScreen: React.FC = () => {
           type="date"
           rules={[{ required: true, message: "Campo obrigatório." }]}
         />
-        <InputForm
+        <InputFormNumber
           label="Valor inicial"
           name="currentValue"
           placeholder="Valor inicial"
-          type="number"
           rules={[{ required: true, message: "Campo obrigatório." }]}
         />
         <ButtonForm text="Salvar" type="primary" htmlType="submit" />

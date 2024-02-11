@@ -24,7 +24,7 @@ const TargetDetailScreen = () => {
           size="small"
         />
       )}
-      {target?.entries && (
+      {target && (
         <Flex vertical>
           <Flex align="center" justify="space-between">
           <h2 className="text-xl font-semibold">Historicos</h2>
@@ -33,7 +33,7 @@ const TargetDetailScreen = () => {
           <List
             size="small"
             dataSource={target?.entries}
-            renderItem={(item) => <HistoricCard {...item} unit={target.unit} />}
+            renderItem={(item) => <HistoricCard {...item} unit={target.unity} />}
           ></List>
         </Flex>
       )}
