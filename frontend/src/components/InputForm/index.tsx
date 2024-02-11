@@ -4,7 +4,7 @@ import { Form, Input } from 'antd'
 
 interface InputFormProps extends ComponentProps<typeof Form.Item> {
   placeholder: string
-  type?: "text" | "number" | "password" | "email" | "date"
+  type?: "text" | "password" | "email" | "date"
 }
 const InputForm = ({placeholder, ...props}: InputFormProps) => {
   return (
