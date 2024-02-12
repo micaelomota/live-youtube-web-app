@@ -2,11 +2,32 @@ import React from "react";
 import {
   Breadcrumb, Layout, Menu, theme
 } from "antd";
-import { Outlet } from "react-router-dom";
-
-const { Header, Content, Footer } = Layout;
 
 const items: any = [];
+type BreadcrumbitemsType = {
+  href: string;
+  title: React.ReactNode;
+};
+const Breadcrumbitems: BreadcrumbitemsType[] = [
+  {
+    href: "/",
+    title: (
+      <>
+        <HomeOutlined />
+        <span>Home</span>
+      </>
+    ),
+  },
+  {
+    href: "/new-target",
+    title: (
+      <>
+        <AimOutlined />
+        <span>Metas</span>
+      </>
+    ),
+  },
+];
 
 export const AppLayout: React.FC = () => {
   const {
@@ -25,12 +46,6 @@ export const AppLayout: React.FC = () => {
           style={{ flex: 1, minWidth: 0 }}
         />
       </Header>
-      <Content style={{ padding: "0 10px" }}>
-        {/* TODO: fazer breadcrumb dinamico */}
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>Metas</Breadcrumb.Item>
-        </Breadcrumb>
 
         <div
           style={{
