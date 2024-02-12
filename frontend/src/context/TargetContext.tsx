@@ -1,4 +1,6 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { db } from "../config/firebase";
+import { addDoc, collection, onSnapshot } from "firebase/firestore";
 
 type TargetContextValue = {
   targets: any[];
@@ -70,8 +72,11 @@ export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
 }) => {
   const [targets, setTargets] = useState<Target[]>(mockData);
 
+  const userId = "ZR9MbNxPj6CfaoHgnXoq";
+
   const addTarget = (target: Target) => {
-    setTargets((t) => [...t, target]);
+    // add target to firestore database
+    addDoc(collection(db, "users/" + userId + "/targets"), target);
   };
 
   const contextValue = useMemo(
@@ -81,6 +86,12 @@ export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
     }),
     [targets]
   );
+
+  useEffect(() => {
+    onSnapshot(collection(db, "users/" + userId + "/targets"), (snapshot) => {
+      setTargets(snapshot.docs.map((doc) => doc.data()) as any[]);
+    });
+  }, []);
 
   return (
     <TargetContext.Provider value={contextValue}>

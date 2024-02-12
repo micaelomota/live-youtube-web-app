@@ -27,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "rm -rf ../backend/public && yarn build && mv build ../backend/public && cd ../backend/ && firebase deploy --only hosting:progresstrack"
   },
   "eslintConfig": {
     "extends": [
