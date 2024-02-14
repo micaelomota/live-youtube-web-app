@@ -12,6 +12,7 @@ import {
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useTargets } from "../../context/TargetContext";
+import DeleteButton from "../../components/buttons/deleteButton/DeleteButton";
 
 const { Header, Content, Footer } = Layout;
 
@@ -27,7 +28,7 @@ export const HomeScreen: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const { targets } = useTargets();
+  const { targets, removeTarget } = useTargets();
 
   const onClickNewTarget = () => {
     navigate("/new-target");
@@ -49,6 +50,9 @@ export const HomeScreen: React.FC = () => {
         renderItem={(item) => (
           <List.Item>
             {item.name}
+            <div style={{ float: "right" }}>
+              <DeleteButton onDelete={() => removeTarget(item.id)} />
+            </div>
             <Progress
               percent={Math.round((item.currentValue / item.target) * 100)}
               size="small"
