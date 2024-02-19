@@ -1,86 +1,106 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { db } from "../config/firebase";
+import {
+  addDoc,
+  deleteDoc,
+  collection,
+  onSnapshot,
+  doc,
+} from "firebase/firestore";
 
 type TargetContextValue = {
-  targets: any[];
-  addTarget: (target: any) => void;
+  targets: TargetProps[] | undefined;
+  addTarget: (target: Omit<TargetProps, "id">) => void;
+  getTargetById: (id: string) => TargetProps | undefined;
+  incrementEntry: (id: string, entry: Entry) => void;
+  removeTarget: (targetId: string) => void;
 };
 
 const TargetContext = createContext<TargetContextValue | null>(null);
 
-const mockData = [
-  {
-    name: "Ler 1 livro por mês",
-    currentValue: 2,
-    target: 12,
-    unit: "Unidade",
-    createdAt: "2021-01-01T00:00:00Z",
-    updatedAt: "2021-01-01T00:00:00Z",
-    entries: [
-      {
-        value: 2,
-        date: "2021-01-01",
-        notes: "Zero - A biografia de uma ideia perigosa",
-      },
-      {
-        value: 2,
-        date: "2021-02-01",
-        notes: "Algorithms to live by ",
-      },
-    ],
-  },
-  {
-    name: "Ir para a academia 3x por semana",
-    currentValue: 12,
-    target: 156,
-    unit: "Unidade",
-    createdAt: "2021-01-01",
-    updatedAt: "2021-01-01",
-    entries: [
-      {
-        value: 2,
-        date: "2024-01-01",
-        notes: "Peito e Biceps",
-      },
-      {
-        value: 2,
-        date: "2024-01-03",
-        notes: "Costas e Triceps",
-      },
-      {
-        value: 2,
-        date: "2024-01-05",
-        notes: "Pernas",
-      },
-      // ...
-    ],
-  },
-];
+interface Entry {
+  value: number;
+  date: string;
+  notes?: string;
+}
 
-type Target = {
-  // id: number
+export interface TargetProps {
+  id: string;
   name: string;
+  target: number;
   currentValue: number;
-  unit: string;
-  createdAt: string;
-  updatedAt: string;
-};
+  unity: string;
+  entries?: Entry[];
+}
+
+const userId = "ZR9MbNxPj6CfaoHgnXoq";
 
 export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [targets, setTargets] = useState<Target[]>(mockData);
+  const [targets, setTargets] = useState<TargetProps[]>([]);
 
-  const addTarget = (target: Target) => {
-    setTargets((t) => [...t, target]);
+  const getTargetById = useCallback(
+    (id: string) => {
+      return targets?.find((target) => target.id === id);
+    },
+    [targets]
+  );
+
+  const incrementEntry = useCallback((id: string, entry: Entry) => {
+    setTargets((prev) =>
+      prev?.map((target) => {
+        if (target.id === id) {
+          return {
+            ...target,
+            currentValue: target.currentValue + entry.value,
+            entries: [...(target.entries || []), entry],
+          };
+        }
+        return target;
+      })
+    );
+  }, []);
+
+  const removeTarget = async (targetId: any) => {
+    const docRef = doc(db, "users/" + userId + "/targets/" + targetId);
+
+    deleteDoc(docRef)
+      .then(() => {
+        console.log("Entire Document has been deleted successfully.");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const contextValue = useMemo(
     () => ({
       targets,
-      addTarget,
+      addTarget: (target: Omit<TargetProps, "id">) =>
+        addDoc(collection(db, "users/" + userId + "/targets"), target),
+      getTargetById,
+      incrementEntry,
+      removeTarget,
     }),
-    [targets]
+    [targets, getTargetById, incrementEntry]
   );
+
+  useEffect(() => {
+    onSnapshot(collection(db, "users/" + userId + "/targets"), (snapshot) => {
+      if (snapshot.docs.length > 0)
+        setTargets(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as any[]
+        );
+    });
+  }, []);
 
   return (
     <TargetContext.Provider value={contextValue}>
