@@ -55,6 +55,7 @@ export const AppLayout: React.FC = () => {
       <Content style={{ padding: "0 48px" }}>
         <Breadcrumb style={{ margin: "16px 0" }} items={Breadcrumbitems} />
 
+      <Content>
         <div
           style={{
             background: colorBgContainer,
