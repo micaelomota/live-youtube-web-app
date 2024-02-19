@@ -19,7 +19,7 @@ export const NewEntry = () => {
   const [form] = Form.useForm<EntryProps>();
 
   const handleAddEntry = (values: EntryProps) => {
-    incrementEntry(Number(id), values);
+    incrementEntry(id!, values);
 
     navigate(`/target/${id}`);
   };

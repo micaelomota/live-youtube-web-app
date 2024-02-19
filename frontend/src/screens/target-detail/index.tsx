@@ -10,7 +10,7 @@ const TargetDetailScreen = () => {
   const { getTargetById } = useTargets();
 
   useEffect(() => {
-    const target = getTargetById(Number(id));
+    const target = getTargetById(id!);
 
     setTarget(target);
   }, [id, getTargetById]);

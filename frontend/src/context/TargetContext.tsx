@@ -18,8 +18,8 @@ import {
 type TargetContextValue = {
   targets: TargetProps[] | undefined;
   addTarget: (target: Omit<TargetProps, "id">) => void;
-  getTargetById: (id: number) => TargetProps | undefined;
-  incrementEntry: (id: number, entry: Entry) => void;
+  getTargetById: (id: string) => TargetProps | undefined;
+  incrementEntry: (id: string, entry: Entry) => void;
   removeTarget: (targetId: string) => void;
 };
 
@@ -32,7 +32,7 @@ interface Entry {
 }
 
 export interface TargetProps {
-  id: number;
+  id: string;
   name: string;
   target: number;
   currentValue: number;
@@ -48,13 +48,13 @@ export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
   const [targets, setTargets] = useState<TargetProps[]>([]);
 
   const getTargetById = useCallback(
-    (id: number) => {
+    (id: string) => {
       return targets?.find((target) => target.id === id);
     },
     [targets]
   );
 
-  const incrementEntry = useCallback((id: number, entry: Entry) => {
+  const incrementEntry = useCallback((id: string, entry: Entry) => {
     setTargets((prev) =>
       prev?.map((target) => {
         if (target.id === id) {
