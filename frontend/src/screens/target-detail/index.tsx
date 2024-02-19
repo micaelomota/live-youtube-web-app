@@ -27,13 +27,17 @@ const TargetDetailScreen = () => {
       {target && (
         <Flex vertical>
           <Flex align="center" justify="space-between">
-          <h2 className="text-xl font-semibold">Historicos</h2>
-          <Link to={`/target/${target.id}/new-entry`}>Adicionar Historico</Link>
+            <h2 className="text-xl font-semibold">Historicos</h2>
+            <Link to={`/target/${target.id}/new-entry`}>
+              Adicionar Historico
+            </Link>
           </Flex>
           <List
             size="small"
             dataSource={target?.entries}
-            renderItem={(item) => <HistoricCard {...item} unit={target.unity} />}
+            renderItem={(item) => (
+              <HistoricCard {...item} unit={target.unity} />
+            )}
           ></List>
         </Flex>
       )}

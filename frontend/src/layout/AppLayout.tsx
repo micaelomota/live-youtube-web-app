@@ -67,7 +67,8 @@ export const AppLayout: React.FC = () => {
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}>
-        Ant Design ©{new Date().getFullYear()} Created by Ant UED
+        ProgressTrack ©{new Date().getFullYear()} Created by @devmicaelomota e
+        os seguidores do youtube
       </Footer>
     </Layout>
   );
