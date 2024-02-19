@@ -33,21 +33,12 @@ export interface TargetProps {
   entries?: Entry[];
 }
 
+const userId = "ZR9MbNxPj6CfaoHgnXoq";
+
 export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [targets, setTargets] = useState<TargetProps[]>(
-    localStorage.getItem("targets")
-      ? JSON.parse(localStorage.getItem("targets")!)
-      : []
-  );
-
-  const userId = "ZR9MbNxPj6CfaoHgnXoq";
-
-  const addTarget = (target: Target) => {
-    // add target to firestore database
-    addDoc(collection(db, "users/" + userId + "/targets"), target);
-  };
+  const [targets, setTargets] = useState<TargetProps[]>([]);
 
   const getTargetById = useCallback(
     (id: number) => {
@@ -74,11 +65,12 @@ export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
   const contextValue = useMemo(
     () => ({
       targets,
-      addTarget,
+      addTarget: (target: Omit<TargetProps, "id">) =>
+        addDoc(collection(db, "users/" + userId + "/targets"), target),
       getTargetById,
       incrementEntry,
     }),
-    [addTarget, targets, getTargetById, incrementEntry]
+    [targets, getTargetById, incrementEntry]
   );
 
   useEffect(() => {

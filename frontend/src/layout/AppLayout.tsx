@@ -1,7 +1,7 @@
 import React from "react";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { AimOutlined, HomeOutlined } from "@ant-design/icons";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 
