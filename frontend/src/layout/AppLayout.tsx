@@ -1,16 +1,7 @@
 import React from "react";
-import {
-  Breadcrumb,
-  Button,
-  Layout,
-  List,
-  Menu,
-  Progress,
-  Space,
-  theme,
-} from "antd";
+import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { AimOutlined, HomeOutlined } from "@ant-design/icons";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 
@@ -76,7 +67,8 @@ export const AppLayout: React.FC = () => {
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}>
-        Ant Design ©{new Date().getFullYear()} Created by Ant UED
+        ProgressTrack ©{new Date().getFullYear()} Created by @devmicaelomota e
+        os seguidores do youtube
       </Footer>
     </Layout>
   );

@@ -1,53 +1,34 @@
 import React from "react";
 import {
-  Breadcrumb,
-  Button,
-  Layout,
-  List,
-  Menu,
-  Progress,
-  Space,
-  theme,
+  Flex,
+  List, Progress,
+  Space
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTargets } from "../../context/TargetContext";
 import DeleteButton from "../../components/buttons/deleteButton/DeleteButton";
 
-const { Header, Content, Footer } = Layout;
-
-// const items = new Array(15).fill(null).map((_, index) => ({
-//   key: index + 1,
-//   label: `nav ${index + 1}`,
-// }));
-
 export const HomeScreen: React.FC = () => {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
-  const navigate = useNavigate();
-
   const { targets, removeTarget } = useTargets();
 
-  const onClickNewTarget = () => {
-    navigate("/new-target");
-  };
 
   return (
-    <Space direction="vertical">
-      {/* TODO: alinhar a direita  */}
-      <Button onClick={onClickNewTarget} icon={<PlusOutlined />} type="primary">
-        Nova Meta
-      </Button>
+    <Flex vertical gap={30} className="w-full">
+      <Space direction="vertical" align="end" className="w-full">
+        <Link to="/new-target" className="py-2 px-3 rounded bg-blue-600 text-white">
+          Nova Meta
+        </Link>
+      </Space>
 
       <List
-        size="small"
-        // header={<div>Metas</div>}
-        // footer={<div>Footer</div>}
+      className="w-full"
+        size="large"
         bordered
         dataSource={targets}
         renderItem={(item) => (
+            <Link 
+            to={`/target/${item.id}`} 
+            className="w-full hover:opacity-80 transition-all duration-200">
           <List.Item>
             {item.name}
             <div style={{ float: "right" }}>
@@ -59,8 +40,9 @@ export const HomeScreen: React.FC = () => {
             />
             {item.currentValue} / {item.target}
           </List.Item>
+            </Link>
         )}
       />
-    </Space>
+    </Flex>
   );
 };
