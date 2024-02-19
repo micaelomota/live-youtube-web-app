@@ -1,4 +1,5 @@
-import { DeleteOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Popconfirm } from "antd";
 import { useState } from "react";
 
 interface IDeleteButton {
@@ -6,17 +7,27 @@ interface IDeleteButton {
 }
 
 const DeleteButton = ({ onDelete }: IDeleteButton) => {
-  const [isDeleteConfirmed, setIsDeleteConfirmed] = useState(false);
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 
-  const onDeleteClick = () => {
-    if (isDeleteConfirmed) onDelete();
-    setIsDeleteConfirmed(!isDeleteConfirmed);
-  };
+  const onConfirmDialogOpenChange = () => {
+    setIsConfirmingDelete(!isConfirmingDelete);
+  }
 
-  const deleteStyle = isDeleteConfirmed
+  const deleteStyle = isConfirmingDelete
     ? { color: "red", cursor: "pointer" }
     : { cursor: "pointer" };
-  return <DeleteOutlined onClick={onDeleteClick} style={deleteStyle} />;
+  return (
+    <Popconfirm 
+      title="Deletar a meta"
+      onConfirm={onDelete}
+      onOpenChange={onConfirmDialogOpenChange}
+      okText="Deletar"
+      cancelText="Cancelar"
+      icon={<ExclamationCircleOutlined style={{color: "red"}}/>}
+    >
+      <DeleteOutlined style={deleteStyle} />;
+    </Popconfirm>
+  )
 };
 
 export default DeleteButton;
