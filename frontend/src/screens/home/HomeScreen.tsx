@@ -6,9 +6,11 @@ import {
 } from "antd";
 import { Link } from "react-router-dom";
 import { useTargets } from "../../context/TargetContext";
+import DeleteButton from "../../components/buttons/deleteButton/DeleteButton";
 
 export const HomeScreen: React.FC = () => {
-  const { targets } = useTargets();
+  const { targets, removeTarget } = useTargets();
+
 
   return (
     <Flex vertical gap={30} className="w-full">
@@ -29,6 +31,9 @@ export const HomeScreen: React.FC = () => {
             className="w-full hover:opacity-80 transition-all duration-200">
           <List.Item>
             {item.name}
+            <div style={{ float: "right" }}>
+              <DeleteButton onDelete={() => removeTarget(item.id)} />
+            </div>
             <Progress
               percent={Math.round((item.currentValue / item.target) * 100)}
               size="small"

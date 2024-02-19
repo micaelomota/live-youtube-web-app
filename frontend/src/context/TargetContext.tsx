@@ -7,13 +7,20 @@ import {
   useState,
 } from "react";
 import { db } from "../config/firebase";
-import { addDoc, collection, onSnapshot } from "firebase/firestore";
+import {
+  addDoc,
+  deleteDoc,
+  collection,
+  onSnapshot,
+  doc,
+} from "firebase/firestore";
 
 type TargetContextValue = {
   targets: TargetProps[] | undefined;
   addTarget: (target: Omit<TargetProps, "id">) => void;
   getTargetById: (id: number) => TargetProps | undefined;
   incrementEntry: (id: number, entry: Entry) => void;
+  removeTarget: (targetId: string) => void;
 };
 
 const TargetContext = createContext<TargetContextValue | null>(null);
@@ -62,6 +69,18 @@ export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
     );
   }, []);
 
+  const removeTarget = async (targetId: any) => {
+    const docRef = doc(db, "users/" + userId + "/targets/" + targetId);
+
+    deleteDoc(docRef)
+      .then(() => {
+        console.log("Entire Document has been deleted successfully.");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const contextValue = useMemo(
     () => ({
       targets,
@@ -69,13 +88,17 @@ export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
         addDoc(collection(db, "users/" + userId + "/targets"), target),
       getTargetById,
       incrementEntry,
+      removeTarget,
     }),
     [targets, getTargetById, incrementEntry]
   );
 
   useEffect(() => {
     onSnapshot(collection(db, "users/" + userId + "/targets"), (snapshot) => {
-      setTargets(snapshot.docs.map((doc) => doc.data()) as any[]);
+      if (snapshot.docs.length > 0)
+        setTargets(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as any[]
+        );
     });
   }, []);
 
