@@ -2,6 +2,7 @@ import React from "react";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { AimOutlined, HomeOutlined } from "@ant-design/icons";
 import { Outlet } from "react-router-dom";
+import packageJson from '../../package.json';
 
 const { Header, Content, Footer } = Layout;
 
@@ -40,6 +41,8 @@ export const AppLayout: React.FC = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+  const version = packageJson.version;
+
   return (
     <Layout>
       <Header style={{ display: "flex", alignItems: "center" }}>
@@ -67,8 +70,13 @@ export const AppLayout: React.FC = () => {
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}>
+        <p>
         ProgressTrack ©{new Date().getFullYear()} Created by @devmicaelomota e
         os seguidores do youtube
+        </p>
+        <p>
+          Version: <span>{version}</span>
+        </p>
       </Footer>
     </Layout>
   );
