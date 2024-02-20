@@ -5,6 +5,7 @@ import InputForm from "../../components/InputForm";
 import ButtonForm from "../../components/ButtonForm";
 import { useTargets } from "../../context/TargetContext";
 import InputFormNumber from "../../components/InputFormNumber";
+import DatePickerForm from "../../components/DatePickerForm";
 
 interface EntryProps {
   value: number;
@@ -33,11 +34,10 @@ export const NewEntry = () => {
           placeholder="Quantidade"
           rules={[{ required: true, message: "Campo obrigatório." }]}
         />
-        <InputForm
-          label="Selecione a data"
+        <DatePickerForm
+          label="Prazo"
           name="date"
           placeholder="Selecione a data"
-          type="date"
           rules={[{ required: true, message: "Campo obrigatório." }]}
         />
         <InputForm label="Notas" name="notes" placeholder="Notas" />

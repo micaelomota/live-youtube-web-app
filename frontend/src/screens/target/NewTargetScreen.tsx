@@ -5,6 +5,7 @@ import SelectForm from "../../components/SelectForm";
 import ButtonForm from "../../components/ButtonForm";
 import { TargetProps, useTargets } from "../../context/TargetContext";
 import InputFormNumber from "../../components/InputFormNumber";
+import DatePickerForm from "../../components/DatePickerForm";
 
 export const NewTargetScreen: React.FC = () => {
   const [form] = Form.useForm<TargetProps>();
@@ -50,11 +51,10 @@ export const NewTargetScreen: React.FC = () => {
             { value: "vezes", label: "Vzs (Vezes)" },
           ]}
         />
-        <InputForm
+        <DatePickerForm
           label="Prazo"
           name="deadline"
           placeholder="Selecione o prazo"
-          type="date"
           rules={[{ required: true, message: "Campo obrigatório." }]}
         />
         <InputFormNumber
