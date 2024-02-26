@@ -1,10 +1,17 @@
-import { User, onAuthStateChanged } from "firebase/auth";
-import { createContext, useContext, useEffect, useState } from "react";
+import { User, getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { auth } from "../config/firebase";
+import { useNavigate } from "react-router-dom";
 
 export type AuthContextType = {
   isAuthenticated: boolean;
-  user: User | null | undefined;
+  user: any | null | undefined;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -12,15 +19,13 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null>();
+  const [user, setUser] = useState<any | null>();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(user);
       setUser(user);
     });
   }, []);
-
   return (
     <AuthContext.Provider
       value={{

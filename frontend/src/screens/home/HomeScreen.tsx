@@ -3,6 +3,7 @@ import { Flex, List, Progress, Space } from "antd";
 import { Link } from "react-router-dom";
 import { useTargets } from "../../context/TargetContext";
 import DeleteButton from "../../components/buttons/deleteButton/DeleteButton";
+import { useAuth } from "../../context/AuthContext";
 
 export const HomeScreen: React.FC = () => {
   const { targets, removeTarget } = useTargets();
