@@ -2,7 +2,9 @@ import React from "react";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { AimOutlined, HomeOutlined } from "@ant-design/icons";
 import { Outlet } from "react-router-dom";
-import packageJson from '../../package.json';
+import packageJson from "../../package.json";
+import { useAuth } from "../context/AuthContext";
+import { auth } from "../config/firebase";
 
 const { Header, Content, Footer } = Layout;
 
@@ -10,7 +12,13 @@ const { Header, Content, Footer } = Layout;
 //   key: index + 1,
 //   label: `nav ${index + 1}`,
 // }));
-const items: any = [];
+const items: any = [
+  // {
+  //   // logout
+  //   key: "logout",
+  //   label: "Logout",
+  // },
+];
 type BreadcrumbitemsType = {
   href: string;
   title: React.ReactNode;
@@ -43,18 +51,31 @@ export const AppLayout: React.FC = () => {
 
   const version = packageJson.version;
 
+  const { user } = useAuth();
+
+  const onClickMenuOption = (e: any) => {
+    if (e.key === "logout") {
+      auth.signOut();
+    }
+  };
+
+  // TODO: completar login e logout
   return (
     <Layout>
       <Header style={{ display: "flex", alignItems: "center" }}>
-        <div className="demo-logo" />
+        <div className="demo-logo" style={{ color: "white" }}>
+          {user?.displayName ? `Olá, ${user?.displayName}` : "Olá, visitante"}
+        </div>
         <Menu
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={["2"]}
+          onClick={onClickMenuOption}
           items={items}
           style={{ flex: 1, minWidth: 0 }}
         />
       </Header>
+
       <Content style={{ padding: "0 48px" }}>
         <Breadcrumb style={{ margin: "16px 0" }} items={Breadcrumbitems} />
 
@@ -71,8 +92,8 @@ export const AppLayout: React.FC = () => {
       </Content>
       <Footer style={{ textAlign: "center" }}>
         <p>
-        ProgressTrack ©{new Date().getFullYear()} Created by @devmicaelomota e
-        os seguidores do youtube
+          ProgressTrack ©{new Date().getFullYear()} Created by @devmicaelomota e
+          os seguidores do youtube
         </p>
         <p>
           Version: <span>{version}</span>

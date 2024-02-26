@@ -11,23 +11,23 @@ const DeleteButton = ({ onDelete }: IDeleteButton) => {
 
   const onConfirmDialogOpenChange = () => {
     setIsConfirmingDelete(!isConfirmingDelete);
-  }
+  };
 
   const deleteStyle = isConfirmingDelete
     ? { color: "red", cursor: "pointer" }
     : { cursor: "pointer" };
   return (
-    <Popconfirm 
+    <Popconfirm
       title="Deletar a meta"
       onConfirm={onDelete}
       onOpenChange={onConfirmDialogOpenChange}
       okText="Deletar"
       cancelText="Cancelar"
-      icon={<ExclamationCircleOutlined style={{color: "red"}}/>}
+      icon={<ExclamationCircleOutlined style={{ color: "red" }} />}
     >
-      <DeleteOutlined style={deleteStyle} />;
+      <DeleteOutlined style={deleteStyle} />
     </Popconfirm>
-  )
+  );
 };
 
 export default DeleteButton;
