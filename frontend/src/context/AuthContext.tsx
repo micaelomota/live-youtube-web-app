@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 export type AuthContextType = {
   isAuthenticated: boolean;
-  user: any | null | undefined;
+  user: User | null | undefined;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,7 +19,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [user, setUser] = useState<any | null>();
+  const [user, setUser] = useState<User | null>();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
