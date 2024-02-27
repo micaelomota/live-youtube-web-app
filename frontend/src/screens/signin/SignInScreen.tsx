@@ -22,7 +22,7 @@ export const SignInScreen = () => {
 
   const handleSignIn = async () => {
     await onClickSignInWithGoogle()
-      .then((res) => navigate("/"))
+      .then(() => navigate("/"))
       .catch((error) => {
         console.log(error);
       });

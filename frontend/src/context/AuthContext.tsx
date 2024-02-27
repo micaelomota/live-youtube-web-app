@@ -1,13 +1,6 @@
-import { User, getAuth, onAuthStateChanged } from "firebase/auth";
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from "react";
+import { User, onAuthStateChanged } from "firebase/auth";
+import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
-import { useNavigate } from "react-router-dom";
 
 export type AuthContextType = {
   isAuthenticated: boolean;

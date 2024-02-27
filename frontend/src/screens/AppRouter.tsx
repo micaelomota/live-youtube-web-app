@@ -6,7 +6,7 @@ import TargetDetailScreen from "./target-detail";
 import { NewEntry } from "./new-entry";
 import { SignInScreen } from "./signin/SignInScreen";
 import { useAuth } from "../context/AuthContext";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 
 export const AppRouter = () => {
   const auth = useAuth();
