@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Card, Divider, Layout } from "antd";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../config/firebase";
-import { signInStyles } from "./SignIn.styles";
+import { signInStyles } from "./signIn.styles";
 import googleLogo from "../../assets/googleLogo.svg";
 import logo from "../../assets/logo.svg";
 import { SignInForm } from "../../components/SignInForm";
@@ -39,19 +39,21 @@ export const SignInScreen = () => {
       </Layout.Content>
       <Layout.Sider 
         style={signInStyles.sider} 
-        width={500}
+        width={"38vw"}
         hidden={isBroken}
         breakpoint="lg"
         onBreakpoint={(broken) => setIsBroken(broken)}
       >
-        <img src={logo} alt="Logo do Progress Tracking" style={signInStyles.image}/>
         <Layout.Content style={signInStyles.siderContent}>
-          <h1>
+          <img src={logo} alt="Logo do Progress Tracking" style={signInStyles.image}/>
+          <div style={signInStyles.siderDiv}>
+            <h1>
               Bem-vindo ao Progress Tracking
             </h1>
             <p>
               Faça login e defina suas metas
             </p>
+          </div>
         </Layout.Content>
       </Layout.Sider>
     </Layout>

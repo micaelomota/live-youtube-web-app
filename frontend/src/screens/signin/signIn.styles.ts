@@ -2,7 +2,6 @@ import React from "react";
 
 const layout: React.CSSProperties = {
   height: '100vh',
-  maxWidth: '1580px',
   margin: '0 auto',
   fontFamily: 'monospace, sans-serif',
 };
@@ -17,12 +16,18 @@ const content: React.CSSProperties = {
 };
   
 const sider: React.CSSProperties = {
-  textAlign: 'center',
   color: '#FFF',
   padding: '50px 40px',
 };
 
 const siderContent: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+}
+
+const siderDiv: React.CSSProperties = {
   textAlign: 'right',
   marginTop: '40px',
 }
@@ -49,5 +54,6 @@ export const signInStyles = {
   button,
   image,
   siderContent,
-  card
+  card,
+  siderDiv
 }
