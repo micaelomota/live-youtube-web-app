@@ -31,6 +31,9 @@ export const SignInForm = () => {
         </Form.Item>
 
         <Form.Item>
+            <a href="#forgot_password" style={{float: 'right', marginBottom: 10}}>
+                Esqueceu a senha?
+            </a>
             <Button type="primary" htmlType="submit" style={{width: '100%'}}>
                 Entrar
             </Button>
