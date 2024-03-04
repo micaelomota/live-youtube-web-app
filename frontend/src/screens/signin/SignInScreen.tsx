@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button, Card, Divider, Layout } from "antd";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../config/firebase";
-import { useNavigate } from "react-router-dom";
 
 import { signInStyles } from "./signIn.styles";
 import googleLogo from "../../assets/googleLogo.svg";
