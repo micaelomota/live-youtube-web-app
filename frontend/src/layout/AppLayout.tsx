@@ -1,7 +1,7 @@
 import React from "react";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { AimOutlined, HomeOutlined } from "@ant-design/icons";
-import { Outlet } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import packageJson from "../../package.json";
 import { useAuth } from "../context/AuthContext";
 import { auth } from "../config/firebase";
@@ -13,11 +13,21 @@ const { Header, Content, Footer } = Layout;
 //   label: `nav ${index + 1}`,
 // }));
 const items: any = [
-  {
-    // logout
-    key: "logout",
-    label: "Logout",
-  },
+
+  [
+    {
+      // logout
+      key: "logout",
+      label: "Logout",
+    }
+  ],
+  [
+    {
+      // login
+      key: "login",
+      label: "Login"
+    }
+  ]
 ];
 type BreadcrumbitemsType = {
   href: string;
@@ -44,6 +54,7 @@ const Breadcrumbitems: BreadcrumbitemsType[] = [
   },
 ];
 
+
 export const AppLayout: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -53,9 +64,13 @@ export const AppLayout: React.FC = () => {
 
   const { user } = useAuth();
 
+  const navigate = useNavigate()
+
   const onClickMenuOption = (e: any) => {
     if (e.key === "logout") {
       auth.signOut();
+    } else if (e.key === "login") {
+      navigate("/auth/sign-in")
     }
   };
 
@@ -71,7 +86,7 @@ export const AppLayout: React.FC = () => {
           mode="horizontal"
           defaultSelectedKeys={["2"]}
           onClick={onClickMenuOption}
-          items={items}
+          items={user ? items[0] : items[1]}
           style={{ flex: 1, minWidth: 0 }}
         />
       </Header>
