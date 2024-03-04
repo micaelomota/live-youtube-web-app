@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Card, Divider, Layout } from "antd";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../config/firebase";
+
 import { signInStyles } from "./signIn.styles";
 import googleLogo from "../../assets/googleLogo.svg";
 import logo from "../../assets/logo.svg";
@@ -9,17 +10,19 @@ import { SignInForm } from "../../components/SignInForm";
 
 const onClickSignInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
-  await signInWithPopup(auth, provider)
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  return signInWithPopup(auth, provider)
 };
 
 export const SignInScreen = () => {
   const [isBroken, setIsBroken] = useState(false);
+    
+  const handleSignIn = async () => {
+    await onClickSignInWithGoogle()
+      .then(() => navigate("/"))
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   
   return (
     <Layout style={signInStyles.layout}>
@@ -30,7 +33,7 @@ export const SignInScreen = () => {
           <Divider />
           <Button 
             style={signInStyles.button}
-            onClick={onClickSignInWithGoogle}
+            onClick={handleSignIn}
             icon={<img src={googleLogo} alt="Logo da Google." width="15px" />}
           >
             Google
