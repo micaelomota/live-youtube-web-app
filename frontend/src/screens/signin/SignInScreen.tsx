@@ -7,15 +7,17 @@ import { signInStyles } from "./signIn.styles";
 import googleLogo from "../../assets/googleLogo.svg";
 import logo from "../../assets/logo.svg";
 import { SignInForm } from "../../components/SignInForm";
+import { useNavigate } from "react-router-dom";
 
 const onClickSignInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
-  return signInWithPopup(auth, provider)
+  return signInWithPopup(auth, provider);
 };
 
 export const SignInScreen = () => {
   const [isBroken, setIsBroken] = useState(false);
-    
+  const navigate = useNavigate();
+
   const handleSignIn = async () => {
     await onClickSignInWithGoogle()
       .then(() => navigate("/"))
@@ -23,7 +25,7 @@ export const SignInScreen = () => {
         console.log(error);
       });
   };
-  
+
   return (
     <Layout style={signInStyles.layout}>
       <Layout.Content style={signInStyles.content}>
@@ -31,7 +33,7 @@ export const SignInScreen = () => {
           <h1>Faça Login</h1>
           <SignInForm />
           <Divider />
-          <Button 
+          <Button
             style={signInStyles.button}
             onClick={handleSignIn}
             icon={<img src={googleLogo} alt="Logo da Google." width="15px" />}
@@ -40,22 +42,22 @@ export const SignInScreen = () => {
           </Button>
         </Card>
       </Layout.Content>
-      <Layout.Sider 
-        style={signInStyles.sider} 
+      <Layout.Sider
+        style={signInStyles.sider}
         width={"38vw"}
         hidden={isBroken}
         breakpoint="lg"
         onBreakpoint={(broken) => setIsBroken(broken)}
       >
         <Layout.Content style={signInStyles.siderContent}>
-          <img src={logo} alt="Logo do Progress Tracking" style={signInStyles.image}/>
+          <img
+            src={logo}
+            alt="Logo do Progress Tracking"
+            style={signInStyles.image}
+          />
           <div style={signInStyles.siderDiv}>
-            <h1>
-              Bem-vindo ao Progress Tracking
-            </h1>
-            <p>
-              Faça login e defina suas metas
-            </p>
+            <h1>Bem-vindo ao Progress Tracking</h1>
+            <p>Faça login e defina suas metas</p>
           </div>
         </Layout.Content>
       </Layout.Sider>
