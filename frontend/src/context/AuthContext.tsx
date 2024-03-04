@@ -19,6 +19,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
       setUser(user);
     });
   }, []);
+
   return (
     <AuthContext.Provider
       value={{

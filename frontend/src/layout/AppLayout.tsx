@@ -13,21 +13,20 @@ const { Header, Content, Footer } = Layout;
 //   label: `nav ${index + 1}`,
 // }));
 const items: any = [
-
   [
     {
       // logout
       key: "logout",
       label: "Logout",
-    }
+    },
   ],
   [
     {
       // login
       key: "login",
-      label: "Login"
-    }
-  ]
+      label: "Login",
+    },
+  ],
 ];
 type BreadcrumbitemsType = {
   href: string;
@@ -54,7 +53,6 @@ const Breadcrumbitems: BreadcrumbitemsType[] = [
   },
 ];
 
-
 export const AppLayout: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -64,13 +62,13 @@ export const AppLayout: React.FC = () => {
 
   const { user } = useAuth();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onClickMenuOption = (e: any) => {
     if (e.key === "logout") {
       auth.signOut();
     } else if (e.key === "login") {
-      navigate("/auth/sign-in")
+      navigate("/auth/sign-in");
     }
   };
 
@@ -91,8 +89,10 @@ export const AppLayout: React.FC = () => {
         />
       </Header>
 
-      <Content style={{ padding: "0 48px" }}>
-        <Breadcrumb style={{ margin: "16px 0" }} items={Breadcrumbitems} />
+      <Content style={{ padding: "24px 48px" }}>
+        {user && (
+          <Breadcrumb style={{ margin: "16px 0" }} items={Breadcrumbitems} />
+        )}
 
         <div
           style={{
