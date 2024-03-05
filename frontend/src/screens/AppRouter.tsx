@@ -7,6 +7,7 @@ import { NewEntry } from "./new-entry";
 import { SignInScreen } from "./signin/SignInScreen";
 import { useAuth } from "../context/AuthContext";
 import { LandingPage } from "./landing-page/LandingPage";
+import { SignUpScreen } from "./signup/SignUpScreen";
 
 export const AppRouter = () => {
   const { user } = useAuth();
@@ -26,6 +27,7 @@ export const AppRouter = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="auth">
               <Route path="sign-in" element={<SignInScreen />} />
+              <Route path="sign-up" element={<SignUpScreen />} />
             </Route>
           </Route>
         )}
