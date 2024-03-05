@@ -8,23 +8,10 @@ import googleLogo from "../../assets/googleLogo.svg";
 import logo from "../../assets/logo.svg";
 import { SignInForm } from "../../components/SignInForm";
 import { useNavigate } from "react-router-dom";
-
-const onClickSignInWithGoogle = async () => {
-  const provider = new GoogleAuthProvider();
-  return signInWithPopup(auth, provider);
-};
+import { SignInButtons } from "../../components/SignInButtons";
 
 export const SignInScreen = () => {
   const [isBroken, setIsBroken] = useState(false);
-  const navigate = useNavigate();
-
-  const handleSignIn = async () => {
-    await onClickSignInWithGoogle()
-      .then(() => navigate("/"))
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   return (
     <Layout style={signInStyles.layout}>
@@ -33,13 +20,7 @@ export const SignInScreen = () => {
           <h1>Faça Login</h1>
           <SignInForm />
           <Divider />
-          <Button
-            style={signInStyles.button}
-            onClick={handleSignIn}
-            icon={<img src={googleLogo} alt="Logo da Google." width="15px" />}
-          >
-            Google
-          </Button>
+          <SignInButtons isBroken={isBroken}/>
         </Card>
       </Layout.Content>
       <Layout.Sider

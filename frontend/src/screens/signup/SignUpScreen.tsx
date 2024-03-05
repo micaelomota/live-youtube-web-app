@@ -1,29 +1,13 @@
 import { useState } from "react";
-import { Button, Card, Divider, Layout } from "antd";
-import { auth } from "../../config/firebase";
+import { Card, Divider, Layout } from "antd";
 import logo from "../../assets/logo.svg";
 import { signUpStyles } from "./signUp.styles";
 import { SignUpForm } from "../../components/SignUpForm";
 import { useNavigate } from "react-router-dom";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import googleLogo from "../../assets/googleLogo.svg";
-
-const onClickSignInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(auth, provider);
-  };
+import { SignInButtons } from "../../components/SignInButtons";
 
 export const SignUpScreen = () => {
   const [isBroken, setIsBroken] = useState(false);
-  const navigate = useNavigate();
-
-  const handleSignIn = async () => {
-    await onClickSignInWithGoogle()
-      .then(() => navigate("/"))
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   return (
     <Layout style={signUpStyles.layout}>
@@ -32,13 +16,7 @@ export const SignUpScreen = () => {
           <h1>Faça Cadastro</h1>
           <SignUpForm />
           <Divider />
-          <Button
-            style={signUpStyles.button}
-            onClick={handleSignIn}
-            icon={<img src={googleLogo} alt="Logo da Google." width="15px" />}
-          >
-            Google
-          </Button>
+          <SignInButtons isBroken={isBroken} />
         </Card>
       </Layout.Content>
       <Layout.Sider
