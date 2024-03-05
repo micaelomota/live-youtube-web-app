@@ -1,8 +1,9 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import { auth } from "../../config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { wrap } from "module";
 
 type SignInFormType = {
   email: string;
@@ -28,7 +29,7 @@ export const SignInForm = () => {
         rules={[{ required: true, message: "Insira seu email" }]}
       >
         <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
+          prefix={<MailOutlined className="site-form-item-icon" />}
           placeholder="Email"
         />
       </Form.Item>
@@ -45,9 +46,14 @@ export const SignInForm = () => {
       </Form.Item>
 
       <Form.Item>
-        <a href="#forgot_password" style={{ float: "right", marginBottom: 10 }}>
+        <div style={{display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+        <Link to="/auth/sign-up">
+          Não tem uma conta?
+        </Link>
+        <a href="#forgot_password" style={{textAlign: "right"}}>
           Esqueceu a senha?
         </a>
+        </div>
         <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
           Entrar
         </Button>
