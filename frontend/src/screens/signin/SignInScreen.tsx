@@ -1,13 +1,9 @@
 import { useState } from "react";
-import { Button, Card, Divider, Layout } from "antd";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../../config/firebase";
+import { Card, Divider, Layout } from "antd";
 
 import { signInStyles } from "./signIn.styles";
-import googleLogo from "../../assets/googleLogo.svg";
 import logo from "../../assets/logo.svg";
 import { SignInForm } from "../../components/SignInForm";
-import { useNavigate } from "react-router-dom";
 import { SignInButtons } from "../../components/SignInButtons";
 
 export const SignInScreen = () => {

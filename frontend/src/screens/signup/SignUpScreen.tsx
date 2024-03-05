@@ -3,7 +3,6 @@ import { Card, Divider, Layout } from "antd";
 import logo from "../../assets/logo.svg";
 import { signUpStyles } from "./signUp.styles";
 import { SignUpForm } from "../../components/SignUpForm";
-import { useNavigate } from "react-router-dom";
 import { SignInButtons } from "../../components/SignInButtons";
 
 export const SignUpScreen = () => {
