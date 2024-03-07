@@ -25,6 +25,7 @@ const siderContent: React.CSSProperties = {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
+  color: 'white',
 }
 
 const siderDiv: React.CSSProperties = {
