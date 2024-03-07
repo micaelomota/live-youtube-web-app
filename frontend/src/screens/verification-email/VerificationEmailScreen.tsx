@@ -11,7 +11,7 @@ export const VerificationEmailScreen = () => {
         if (user && !user?.emailVerified) {
             sendEmailVerification(user).then(() => setEmailSended(true));
         }
-    }, [])
+    }, []);
 
     return (
         <div>

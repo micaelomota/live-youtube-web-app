@@ -7,7 +7,6 @@ import gitHubLogo from "../../assets/gitHubLogo.svg";
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup, GoogleAuthProvider, OAuthProvider, GithubAuthProvider, User } from "firebase/auth";
 import { auth } from "../../config/firebase";
-import { useAuth } from "../../context/AuthContext";
 
 
 
@@ -41,8 +40,7 @@ const SignInGitHub = () => {
 }
 
 export const SignInButtons = ({isBroken}: {isBroken: boolean}) => {
-    const { user } = useAuth()
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const handleSignIn = async (provider: String) => {
         switch (provider) {
             case 'Google': await SignInGoogle().then((crendentialUser) => redirect(crendentialUser.user));
@@ -62,7 +60,7 @@ export const SignInButtons = ({isBroken}: {isBroken: boolean}) => {
         } else {
             navigate("/verification-email");
         }
-    }
+    };
 
     const styles = isBroken ? SignInButtonsStyles.buttonMobile : SignInButtonsStyles.button;
     
