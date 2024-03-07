@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Input, Button } from "antd";
 import { MailOutlined } from "@ant-design/icons";
 import { sendPasswordResetEmail } from "firebase/auth";
@@ -9,9 +9,11 @@ import { Styles } from "./ForgotPassword.styles";
 type ForgotPasswordFormType = {
   email: string;
 };
+const widthScreen = window.innerWidth;
 
 export const ForgotPassword = () => {
   const [sendedEmail, setSendedEmail] = useState(false);
+
   
   const onFinish = (values: ForgotPasswordFormType) => {
       sendPasswordResetEmail(auth, values.email).then(
@@ -20,7 +22,11 @@ export const ForgotPassword = () => {
   };
 
     return (
-      <Form initialValues={{ remember: true }} onFinish={onFinish} style={Styles.form}>
+      <Form
+        initialValues={{ remember: true }} 
+        onFinish={onFinish} 
+        style={widthScreen < 450 ? Styles.formMobile : Styles.form}
+      >
         <h1>Recuperação de Senha</h1>
         <Form.Item<ForgotPasswordFormType>
           name="email"

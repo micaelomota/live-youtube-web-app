@@ -13,7 +13,6 @@ export const SignInForm = () => {
   const navigate = useNavigate();
 
   const redirect = (user: User) => {
-    console.log(user)
     if (user?.emailVerified) {
         navigate("/");
     } else {
