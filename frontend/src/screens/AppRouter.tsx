@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { HomeScreen } from "./home/HomeScreen";
 import { NewTargetScreen } from "./target/NewTargetScreen";
 import { AppLayout } from "../layout/AppLayout";
@@ -8,6 +8,7 @@ import { SignInScreen } from "./signin/SignInScreen";
 import { useAuth } from "../context/AuthContext";
 import { LandingPage } from "./landing-page/LandingPage";
 import { SignUpScreen } from "./signup/SignUpScreen";
+import { VerificationEmailScreen } from "./verification-email/VerificationEmailScreen";
 
 export const AppRouter = () => {
   const { user } = useAuth();
@@ -17,6 +18,7 @@ export const AppRouter = () => {
       <Route element={<AppLayout />}>
         {user ? (
           <Route>
+            <Route path="/auth/verification-email" element={<VerificationEmailScreen />} />
             <Route path="/" element={<HomeScreen />} />
             <Route path="/new-target" element={<NewTargetScreen />} />
             <Route path="/target/:id" element={<TargetDetailScreen />} />

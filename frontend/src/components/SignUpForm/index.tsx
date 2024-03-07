@@ -17,13 +17,12 @@ export const SignUpForm = () => {
   const onFinish = async (values: SignUpFormType) => {
     try {
       if (values.password != values.confirmPassword) throw new Error('As senhas não conferem');
-      const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password)
-      await updateProfile(userCredential.user, {displayName: values.name})
-      
-      navigate("/");
-    } catch (e) {
-      console.error(e);
-    }
+        const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+        await updateProfile(userCredential.user, {displayName: values.name});
+        navigate("/auth/verification-email");
+      } catch (e) {
+        console.error(e);
+      }
   };
 
   return (

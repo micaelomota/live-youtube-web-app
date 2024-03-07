@@ -5,8 +5,10 @@ import appleLogo from "../../assets/appleLogo.svg";
 import microsoftLogo from "../../assets/microsoftLogo.svg";
 import gitHubLogo from "../../assets/gitHubLogo.svg";
 import { useNavigate } from "react-router-dom";
-import { signInWithPopup, GoogleAuthProvider, OAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, OAuthProvider, GithubAuthProvider, User } from "firebase/auth";
 import { auth } from "../../config/firebase";
+import { useAuth } from "../../context/AuthContext";
+
 
 
 const SignInGoogle = async () => {
@@ -35,20 +37,35 @@ const SignInMicrosoft = () => {
 const SignInGitHub = () => {
     const provider = new GithubAuthProvider();
     provider.addScope('name');
-    return signInWithPopup(auth, provider)
+    return signInWithPopup(auth, provider);
 }
 
 export const SignInButtons = ({isBroken}: {isBroken: boolean}) => {
+    const { user } = useAuth()
     const navigate = useNavigate()
     const handleSignIn = async (provider: String) => {
         switch (provider) {
-            case 'Google': await SignInGoogle().then(() => navigate("/")); break;
-            case 'Apple': await SignInApple().then(() => navigate("/")); break;
-            case 'Microsoft': await SignInMicrosoft().then(() => navigate("/")); break;
-            case 'GitHub': await SignInGitHub().then(() => navigate("/")); break;
+            case 'Google': await SignInGoogle().then((crendentialUser) => redirect(crendentialUser.user));
+             break;
+            case 'Apple': await SignInApple().then((crendentialUser) => redirect(crendentialUser.user));
+             break;
+            case 'Microsoft': await SignInMicrosoft().then((crendentialUser) => redirect(crendentialUser.user));
+             break;
+            case 'GitHub': await SignInGitHub().then((crendentialUser) => redirect(crendentialUser.user));
+             break;
         }
     }
-    const styles = isBroken ? SignInButtonsStyles.buttonMobile : SignInButtonsStyles.button
+
+    const redirect = (user: User) => {
+        if (user?.emailVerified) {
+            navigate("/");
+        } else {
+            navigate("/verification-email");
+        }
+    }
+
+    const styles = isBroken ? SignInButtonsStyles.buttonMobile : SignInButtonsStyles.button;
+    
     return (
         <div 
             style={isBroken ? {

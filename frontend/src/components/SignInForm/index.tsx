@@ -1,7 +1,7 @@
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import { auth } from "../../config/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { User, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 
 type SignInFormType = {
@@ -12,10 +12,19 @@ type SignInFormType = {
 export const SignInForm = () => {
   const navigate = useNavigate();
 
+  const redirect = (user: User) => {
+    console.log(user)
+    if (user?.emailVerified) {
+        navigate("/");
+    } else {
+        navigate("/auth/verification-email");
+    }
+}
+
   const onFinish = async (values: SignInFormType) => {
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
-      navigate("/");
+      const credentialUser = await signInWithEmailAndPassword(auth, values.email, values.password);
+      redirect(credentialUser.user);
     } catch (e) {
       console.error(e);
     }
