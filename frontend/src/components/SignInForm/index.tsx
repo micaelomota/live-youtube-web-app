@@ -58,9 +58,9 @@ export const SignInForm = () => {
         <Link to="/auth/sign-up">
           Não tem uma conta?
         </Link>
-        <a href="#forgot_password" style={{textAlign: "right"}}>
+        <Link to="/auth/forgot-password" style={{textAlign: "right"}}>
           Esqueceu a senha?
-        </a>
+        </Link>
         </div>
         <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
           Entrar

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import { HomeScreen } from "./home/HomeScreen";
 import { NewTargetScreen } from "./target/NewTargetScreen";
 import { AppLayout } from "../layout/AppLayout";
@@ -9,6 +9,7 @@ import { useAuth } from "../context/AuthContext";
 import { LandingPage } from "./landing-page/LandingPage";
 import { SignUpScreen } from "./signup/SignUpScreen";
 import { VerificationEmailScreen } from "./verification-email/VerificationEmailScreen";
+import { ForgotPassword } from "./forgot-password/ForgotPassword";
 
 export const AppRouter = () => {
   const { user } = useAuth();
@@ -28,6 +29,7 @@ export const AppRouter = () => {
           <Route>
             <Route path="/" element={<LandingPage />} />
             <Route path="auth">
+              <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="sign-in" element={<SignInScreen />} />
               <Route path="sign-up" element={<SignUpScreen />} />
             </Route>
@@ -35,7 +37,12 @@ export const AppRouter = () => {
         )}
       </Route>
 
-      <Route path="*" element={<div>404 Not Found</div>} />
+      <Route path="*" element={
+        <div>
+          <h1>404 Not Found</h1>
+          <Link to="/">Volte para a Home</Link>
+        </div>} 
+      />
     </Routes>
   );
 };
