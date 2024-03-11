@@ -67,9 +67,8 @@ export const AppLayout: React.FC = () => {
   const onClickMenuOption = (e: any) => {
     if (e.key === "logout") {
       auth.signOut();
-    } else if (e.key === "login") {
-      navigate("/auth/sign-in");
     }
+    navigate("/auth/sign-in");
   };
 
   // TODO: completar login e logout
@@ -90,7 +89,7 @@ export const AppLayout: React.FC = () => {
       </Header>
 
       <Content style={{ padding: "24px 48px" }}>
-        {user && (
+        {user?.emailVerified && (
           <Breadcrumb style={{ margin: "16px 0" }} items={Breadcrumbitems} />
         )}
 

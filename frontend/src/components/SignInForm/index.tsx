@@ -1,8 +1,8 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import { auth } from "../../config/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { User, signInWithEmailAndPassword } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
 
 type SignInFormType = {
   email: string;
@@ -12,10 +12,18 @@ type SignInFormType = {
 export const SignInForm = () => {
   const navigate = useNavigate();
 
+  const redirect = (user: User) => {
+    if (user?.emailVerified) {
+        navigate("/");
+    } else {
+        navigate("/auth/verification-email");
+    }
+}
+
   const onFinish = async (values: SignInFormType) => {
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
-      navigate("/");
+      const credentialUser = await signInWithEmailAndPassword(auth, values.email, values.password);
+      redirect(credentialUser.user);
     } catch (e) {
       console.error(e);
     }
@@ -28,7 +36,7 @@ export const SignInForm = () => {
         rules={[{ required: true, message: "Insira seu email" }]}
       >
         <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
+          prefix={<MailOutlined className="site-form-item-icon" />}
           placeholder="Email"
         />
       </Form.Item>
@@ -45,9 +53,14 @@ export const SignInForm = () => {
       </Form.Item>
 
       <Form.Item>
-        <a href="#forgot_password" style={{ float: "right", marginBottom: 10 }}>
+        <div style={{display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+        <Link to="/auth/sign-up">
+          Não tem uma conta?
+        </Link>
+        <Link to="/auth/forgot-password" style={{textAlign: "right"}}>
           Esqueceu a senha?
-        </a>
+        </Link>
+        </div>
         <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
           Entrar
         </Button>

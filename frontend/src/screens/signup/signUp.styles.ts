@@ -33,6 +33,12 @@ const siderDiv: React.CSSProperties = {
   marginTop: '40px',
 }
 
+const button: React.CSSProperties = {
+  height: '40px',
+  display: 'flex',
+  alignItems: 'center',
+}
+
 const image: React.CSSProperties = {
   width: '280px',
 }
@@ -42,10 +48,11 @@ const card: React.CSSProperties = {
   width: '90%',
 }
 
-export const signInStyles = {
+export const signUpStyles = {
   layout,
   content,
   sider,
+  button,
   image,
   siderContent,
   card,
