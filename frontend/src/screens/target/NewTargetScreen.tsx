@@ -3,16 +3,17 @@ import { useNavigate } from "react-router-dom";
 import InputForm from "../../components/InputForm";
 import SelectForm from "../../components/SelectForm";
 import ButtonForm from "../../components/ButtonForm";
-import { TargetProps, useTargets } from "../../context/TargetContext";
+import { useTargets } from "../../context/TargetContext";
 import InputFormNumber from "../../components/InputFormNumber";
 import DatePickerForm from "../../components/DatePickerForm";
+import { Target } from "../../hooks/useTargets";
 
 export const NewTargetScreen: React.FC = () => {
-  const [form] = Form.useForm<TargetProps>();
+  const [form] = Form.useForm<Target>();
   const navigate = useNavigate();
   const { addTarget } = useTargets();
 
-  const onFinishForm = (values: TargetProps) => {
+  const onFinishForm = (values: Target) => {
     addTarget({
       name: values.name,
       unity: values.unity,
@@ -49,6 +50,7 @@ export const NewTargetScreen: React.FC = () => {
             { value: "horas", label: "Hrs (Horas)" },
             { value: "minutos", label: "Min (Minutos)" },
             { value: "vezes", label: "Vzs (Vezes)" },
+            { value: "unidade", label: "Unidades" },
           ]}
         />
         <DatePickerForm

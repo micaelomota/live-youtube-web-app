@@ -71,7 +71,6 @@ export const AppLayout: React.FC = () => {
     navigate("/auth/sign-in");
   };
 
-  // TODO: completar login e logout
   return (
     <Layout>
       <Header style={{ display: "flex", alignItems: "center" }}>

@@ -1,5 +1,4 @@
 import { Flex, List } from "antd";
-import React from "react";
 import { convertDate } from "../../utils/convertDate";
 
 interface HistoricCardProps {

@@ -19,8 +19,11 @@ export const AppRouter = () => {
       <Route element={<AppLayout />}>
         {user ? (
           <Route>
-            <Route path="/auth/verification-email" element={<VerificationEmailScreen />} />
             <Route path="/" element={<HomeScreen />} />
+            <Route
+              path="/auth/verification-email"
+              element={<VerificationEmailScreen />}
+            />
             <Route path="/new-target" element={<NewTargetScreen />} />
             <Route path="/target/:id" element={<TargetDetailScreen />} />
             <Route path="/target/:id/new-entry" element={<NewEntry />} />
@@ -37,11 +40,14 @@ export const AppRouter = () => {
         )}
       </Route>
 
-      <Route path="*" element={
-        <div>
-          <h1>404 Not Found</h1>
-          <Link to="/">Volte para a Home</Link>
-        </div>} 
+      <Route
+        path="*"
+        element={
+          <div>
+            <h1>404 Not Found</h1>
+            <Link to="/">Volte para a Home</Link>
+          </div>
+        }
       />
     </Routes>
   );

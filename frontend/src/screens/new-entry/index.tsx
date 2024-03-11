@@ -16,11 +16,11 @@ interface EntryProps {
 export const NewEntry = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { incrementEntry } = useTargets();
+  const { addTargetEntry } = useTargets();
   const [form] = Form.useForm<EntryProps>();
 
   const handleAddEntry = (values: EntryProps) => {
-    incrementEntry(id!, values);
+    addTargetEntry(id!, { ...values, date: values.date.toString() });
 
     navigate(`/target/${id}`);
   };

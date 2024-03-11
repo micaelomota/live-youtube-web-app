@@ -1,19 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
-import { TargetProps, useTargets } from "../../context/TargetContext";
+import { useTargets } from "../../context/TargetContext";
 import { Flex, List, Progress } from "antd";
 import HistoricCard from "../../components/HistoricCard";
+import { Target, useTargetEntryQuery } from "../../hooks/useTargets";
+import { useAuth } from "../../context/AuthContext";
 
 const TargetDetailScreen = () => {
   const { id } = useParams();
-  const [target, setTarget] = React.useState<TargetProps>();
+  const { user } = useAuth();
   const { getTargetById } = useTargets();
 
-  useEffect(() => {
-    const target = getTargetById(id!);
+  const { isLoading, entries } = useTargetEntryQuery(user!.uid!, id!);
 
-    setTarget(target);
+  const target = useMemo(() => {
+    return getTargetById(id!);
   }, [id, getTargetById]);
+
+  console.log(target);
 
   return (
     <Flex vertical>
@@ -34,7 +38,7 @@ const TargetDetailScreen = () => {
           </Flex>
           <List
             size="small"
-            dataSource={target?.entries}
+            dataSource={entries}
             renderItem={(item) => (
               <HistoricCard {...item} unit={target.unity} />
             )}
