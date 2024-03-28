@@ -9,6 +9,7 @@ type TargetContextValue = {
   getTargetById: (id: string) => Target | undefined;
   addTargetEntry: (id: string, entry: TargetEntry) => void;
   removeTarget: (targetId: string) => void;
+  updateTarget: (target: Target) => void;
 };
 
 const TargetContext = createContext<TargetContextValue | null>(null);
@@ -17,8 +18,14 @@ export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const { user } = useAuth();
-  const { isLoading, targets, addTarget, removeTarget, addTargetEntry } =
-    useTargetsQuery(user?.uid);
+  const {
+    isLoading,
+    targets,
+    addTarget,
+    removeTarget,
+    addTargetEntry,
+    updateTarget,
+  } = useTargetsQuery(user?.uid);
 
   const contextValue = {
     isLoading,
@@ -27,6 +34,7 @@ export const TargetContextProvider: React.FC<React.PropsWithChildren> = ({
     removeTarget,
     getTargetById: (id: string) => targets?.find((target) => target.id === id),
     addTargetEntry,
+    updateTarget,
   };
 
   return (

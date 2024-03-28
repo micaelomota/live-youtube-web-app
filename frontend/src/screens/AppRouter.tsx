@@ -10,6 +10,7 @@ import { LandingPage } from "./landing-page/LandingPage";
 import { SignUpScreen } from "./signup/SignUpScreen";
 import { VerificationEmailScreen } from "./verification-email/VerificationEmailScreen";
 import { ForgotPassword } from "./forgot-password/ForgotPassword";
+import { EditTargetScreen } from "./edit-target/EditTargetScreen";
 
 export const AppRouter = () => {
   const { user } = useAuth();
@@ -27,6 +28,7 @@ export const AppRouter = () => {
             <Route path="/new-target" element={<NewTargetScreen />} />
             <Route path="/target/:id" element={<TargetDetailScreen />} />
             <Route path="/target/:id/new-entry" element={<NewEntry />} />
+            <Route path="/edit-target" element={<EditTargetScreen />} />
           </Route>
         ) : (
           <Route>

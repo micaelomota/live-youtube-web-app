@@ -40,6 +40,7 @@ export const useTargetsQuery = (userId?: string) => {
       addTarget: (target: Omit<Target, "id">) => userId ? addTarget(target, userId) : null,
       removeTarget: (targetId: string) => userId ? removeTarget(targetId, userId) : null,
       addTargetEntry: (id: string, entry: TargetEntry) => userId ? addTargetEntry(id, entry, userId) : null,
+      updateTarget: (target: Target) => userId ? updateTarget(target, userId) : null
     }
 }
 
@@ -51,6 +52,12 @@ export const removeTarget = async (targetId: any, userId: string) => {
 
 export const addTarget = async (target: Omit<Target, "id">, userId: string) => {
   return addDoc(collection(db, `users/${userId}/targets`), target);
+}
+
+export const updateTarget = async (target: Target, userId: string) => {
+  const { id, ...targetWithoutId } = target;
+  const docRef = doc(db, `users/${userId}/targets/${id}`);
+  return updateDoc(docRef, targetWithoutId);
 }
 
 export const addTargetEntry = async (id: string, entry: TargetEntry, userId: string) => {
