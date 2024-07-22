@@ -8,8 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { signInWithPopup, GoogleAuthProvider, OAuthProvider, GithubAuthProvider, User } from "firebase/auth";
 import { auth } from "../../config/firebase";
 
-
-
 const SignInGoogle = async () => {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider);
@@ -39,20 +37,8 @@ const SignInGitHub = () => {
     return signInWithPopup(auth, provider);
 }
 
-export const SignInButtons = ({isBroken}: {isBroken: boolean}) => {
+export const SignInButtons = ({ isBroken }: { isBroken: boolean }) => {
     const navigate = useNavigate();
-    const handleSignIn = async (provider: String) => {
-        switch (provider) {
-            case 'Google': await SignInGoogle().then((crendentialUser) => redirect(crendentialUser.user));
-             break;
-            case 'Apple': await SignInApple().then((crendentialUser) => redirect(crendentialUser.user));
-             break;
-            case 'Microsoft': await SignInMicrosoft().then((crendentialUser) => redirect(crendentialUser.user));
-             break;
-            case 'GitHub': await SignInGitHub().then((crendentialUser) => redirect(crendentialUser.user));
-             break;
-        }
-    }
 
     const redirect = (user: User) => {
         if (user?.emailVerified) {
@@ -63,37 +49,51 @@ export const SignInButtons = ({isBroken}: {isBroken: boolean}) => {
     };
 
     const styles = isBroken ? SignInButtonsStyles.buttonMobile : SignInButtonsStyles.button;
-    
+
     return (
-        <div 
+        <div
             style={isBroken ? {
                 ...SignInButtonsStyles.container, flexDirection: 'column'
             } : SignInButtonsStyles.container}
         >
             <Button
                 style={styles}
-                onClick={() => handleSignIn('Google')}
+                onClick={async () => await SignInGoogle().then((credentialUser) =>
+                    redirect(credentialUser.user)
+                )}
                 icon={<img src={googleLogo} alt="Logo da Google." width="15px" />}
             >
                 Google
             </Button>
             <Button
                 style={styles}
-                onClick={() => handleSignIn('Apple')}
+                onClick={async () =>
+                    await SignInApple().then((credentialUser) =>
+                        redirect(credentialUser.user)
+                    )
+                }
                 icon={<img src={appleLogo} alt="Logo da Apple." width="15px" />}
             >
                 Apple
             </Button>
             <Button
                 style={styles}
-                onClick={() => handleSignIn('Microsoft')}
+                onClick={async () =>
+                    await SignInMicrosoft().then((credentialUser) =>
+                        redirect(credentialUser.user)
+                    )
+                }
                 icon={<img src={microsoftLogo} alt="Logo da Microsoft." width="15px" />}
             >
                 Microsoft
             </Button>
             <Button
                 style={styles}
-                onClick={() => handleSignIn('GitHub')}
+                onClick={async () =>
+                    await SignInGitHub().then((credentialUser) =>
+                        redirect(credentialUser.user)
+                    )
+                }
                 icon={<img src={gitHubLogo} alt="Logo da GitHub." width="15px" />}
             >
                 GitHub
